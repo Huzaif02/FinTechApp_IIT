@@ -11,8 +11,6 @@ const kycRoutes = require('./routes/kycRoutes');
 const investmentRoutes = require('./routes/investmentRoutes');
 const portfolioRoutes = require('./routes/portfolioRoutes');
 const complianceRoutes = require('./routes/complianceRoutes');
-const dashboardRoutes = require('./routes/dashboardRoutes');
-const profileRoutes = require('./routes/profileRoutes')
 
 const app = express();
 
@@ -30,8 +28,6 @@ app.use('/api/kyc', kycRoutes);
 app.use('/api/investments', investmentRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/compliance', complianceRoutes);
-app.use('/api/user', profileRoutes)
-app.use('/api', dashboardRoutes);
 
 // Root Route
 app.get('/', (req, res) => {

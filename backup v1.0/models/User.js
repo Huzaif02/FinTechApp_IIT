@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function () {
-        return this.isVerified; // Required only after verification
+        return this.isVerified; // Password is required only after verification
       },
     },
     otp: {

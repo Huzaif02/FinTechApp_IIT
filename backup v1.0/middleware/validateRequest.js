@@ -6,8 +6,10 @@ const validateRequest = (req, res, next) => {
     return res.status(400).json({
       success: false,
       errors: errors.array().map((err) => ({
+        type: err.param ? 'field' : 'general',
         msg: err.msg,
-        param: err.param,
+        path: err.param || null,
+        location: err.location || 'body',
       })),
     });
   }

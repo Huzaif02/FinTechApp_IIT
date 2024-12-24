@@ -1,14 +1,11 @@
 const express = require('express');
-const { listAllFunds, getTopFunds, invest, requestAssistance } = require('../controllers/investmentController');
+const { listFunds, invest, requestAssistance } = require('../controllers/investmentController');
 const { authenticateToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // List available mutual funds
-router.get('/funds', authenticateToken, listAllFunds);
-
-//List only 10 Mutual Funds
-router.get('/getTopFunds', authenticateToken, getTopFunds )
+router.get('/funds', authenticateToken, listFunds);
 
 // Invest in a mutual fund
 router.post('/invest', authenticateToken, invest);
