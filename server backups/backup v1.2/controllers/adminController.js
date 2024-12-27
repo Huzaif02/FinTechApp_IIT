@@ -1,7 +1,7 @@
 // adminController.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {Admin, User, Agent, KYC, Transaction} = require('../models'); //models
+const {Admin, User, KYC, Transaction} = require('../models'); //models
 
 // Admin Registration
 exports.registerAdmin = async (req, res) => {
@@ -80,62 +80,6 @@ exports.loginAdmin = async (req, res) => {
                 role: admin.role,
             },
         });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
-
-//admin dashboard
-exports.getDashboardData = async (req, res) => {
-    try {
-        // Fetch total number of users
-        const totalUsers = await User.countDocuments();
-
-        // Fetch total number of active agents
-        const totalAgents = await Agent.countDocuments({ status: 'Active' });
-
-        // Fetch transaction statistics
-        const totalTransactions = await Transaction.countDocuments();
-        const completedTransactions = await Transaction.countDocuments({ status: 'Completed' });
-        const failedTransactions = await Transaction.countDocuments({ status: 'Failed' });
-
-        // Fetch KYC statistics
-        const pendingKYCs = await User.countDocuments({ kycStatus: 'Pending' });
-        const approvedKYCs = await User.countDocuments({ kycStatus: 'Approved' });
-        const rejectedKYCs = await User.countDocuments({ kycStatus: 'Rejected' });
-
-        // Fetch recent transactions
-        const recentTransactions = await Transaction.find()
-            .sort({ createdAt: -1 })
-            .limit(5)
-            .select('amount status createdAt');
-
-        // Fetch recent user signups
-        const recentUsers = await User.find()
-            .sort({ createdAt: -1 })
-            .limit(5)
-            .select('fullName email createdAt');
-
-
-        // Prepare the dashboard data
-        const dashboardData = {
-            totalUsers,
-            totalAgents,
-            transactions: {
-                total: totalTransactions,
-                completed: completedTransactions,
-                failed: failedTransactions,
-            },
-            kyc: {
-                pending: pendingKYCs,
-                approved: approvedKYCs,
-                rejected: rejectedKYCs,
-            },
-            recentTransactions,
-            recentUsers,
-        };
-
-        res.status(200).json({ message: 'Dashboard data fetched successfully', data: dashboardData });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

@@ -18,20 +18,6 @@ const PartnerSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    address: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: false,
-    },
-    areaAllotted: {
-      type: String, // The geographical area assigned to the partner
-      required: true,
-      trim: true,
-    },
     dashboard: {
       analytics: {
         type: mongoose.Schema.Types.Mixed, // Analytics data related to partner performance
@@ -66,10 +52,6 @@ const PartnerSchema = new mongoose.Schema(
     ],
     communicationChannel: {
       type: String, // Preferred communication channel (e.g., Email, Phone)
-    },
-    additionalDetails: {
-      type: mongoose.Schema.Types.Mixed, // Field for storing any additional parameters
-      default: {},
     },
     status: {
       type: String,

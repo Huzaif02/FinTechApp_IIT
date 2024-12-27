@@ -1,6 +1,6 @@
 // agentController.js
 const Agent = require('../models/Agent/Agent') // Agent model
-const Partner = require('../models/Partner/Partner'); // Partner model
+const Partner = require('../models'); // Partner model
 const nodemailer = require('nodemailer'); // For sending emails
 const bcrypt = require('bcryptjs'); // For hashing passwords
 const jwt = require('jsonwebtoken'); // For generating tokens
@@ -41,12 +41,13 @@ exports.getAgentDetails = async (req, res) => {
 // Add a New Agent
 exports.addAgent = async (req, res) => {
     try {
+        console.log("addAgent Method called");
         const { fullName, email, phone, assignedPartner } = req.body;
-
+        console.log('Agent model:', Agent);
         // Check if the agent already exists
         const existingAgent = await Agent.findOne({ $or: [{ email }, { phone }] });
         if (existingAgent) {
-            return res.status(400).json({ message: 'Agent with this email or phone already exists' });
+            return res.status(400).json({ message: 'Agent with this email already exists' });
         }
 
         // Generate a random password for the agent
@@ -62,17 +63,6 @@ exports.addAgent = async (req, res) => {
             password: hashedPassword, // Store hashed password
         });
 
-        // Add the new agent to the Partner's agents array
-        const partner = await Partner.findByIdAndUpdate(
-            assignedPartner,
-            { $push: { agents: agent._id } }, // Add the agent's ID to the Partner's agents array
-            { new: true } // Return the updated Partner document
-        );
-
-        if (!partner) {
-            return res.status(404).json({ message: 'Assigned partner not found' });
-        }
-
         // Send email with login credentials
         const transporter = nodemailer.createTransport({
             service: 'Gmail', // You can configure any email service here
@@ -87,14 +77,14 @@ exports.addAgent = async (req, res) => {
             to: email,
             subject: 'Agent Account Created',
             text: `Hello ${fullName},
-
+                    
     Your agent account has been created successfully. Here are your login credentials:
 
-    Email: ${email}
-    Password: ${password}
-
+        Email: ${email}
+        Password: ${password}
+                    
     Please log in to your account and change your password immediately.
-
+                    
     Thank you,
     Admin Team`,
         };
@@ -105,14 +95,10 @@ exports.addAgent = async (req, res) => {
                 return res.status(500).json({ message: 'Agent created but failed to send email', error: err.message });
             }
             console.log('Email sent:', info.response);
-            res.status(201).json({
-                message: 'Agent added successfully and assigned to the partner. Login credentials sent via email.',
-                agent,
-                updatedPartner: partner,
-            });
+            res.status(201).json({ message: 'Agent added successfully. Login credentials sent via email.', agent });
         });
     } catch (error) {
-        console.error('Error:', error.message);
+        console.log(error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
@@ -167,7 +153,7 @@ exports.getAgentProgress = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const agent = await Agent.findById(id).populate('progress');
+        const agent = await Agent.findById(id).populate('progress'); // Assuming `progress` is a reference in Agent schema
         if (!agent) {
             return res.status(404).json({ message: 'Agent not found' });
         }
