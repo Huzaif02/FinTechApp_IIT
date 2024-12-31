@@ -10,11 +10,8 @@ const Partner = require('./Partner/Partner');
 const AgentPerformance = require('./Partner/AgentPerformance');
 const MutualFund = require('./MutualFund/MutualFund');
 const Recommendation = require('./MutualFund/Recommendation');
-const Promotion = require('./Promotion/Promotion');
+const Promotions = require('./MutualFund/Promotions');
 const Notification = require('./Notifications/Notification');
-const News = require('./News/News');
-const Query = require('./Support/Query');
-const Faq = require('./Support/Faq');
 
 module.exports = {
   User,
@@ -29,9 +26,6 @@ module.exports = {
   AgentPerformance,
   MutualFund,
   Recommendation,
-  Promotion,
+  Promotions,
   Notification,
-  News,
-  Query,
-  Faq
 };

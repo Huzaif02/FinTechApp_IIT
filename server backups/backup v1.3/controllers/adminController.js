@@ -6,7 +6,7 @@ const {Admin, User, Agent, KYC, Transaction} = require('../models'); //models
 // Admin Registration
 exports.registerAdmin = async (req, res) => {
     try {
-        const { fullName, email, mobile, password, confirmPassword, role } = req.body;
+        const { name, email, mobile, password, confirmPassword, role } = req.body;
 
         // Check if passwords match
         if (password !== confirmPassword) {
@@ -24,7 +24,7 @@ exports.registerAdmin = async (req, res) => {
 
         // Create admin
         const newAdmin = await Admin.create({
-            fullName,
+            name,
             email,
             mobile,
             password: hashedPassword,
@@ -65,13 +65,9 @@ exports.loginAdmin = async (req, res) => {
 
         // Generate a JWT token
         const token = jwt.sign(
-            {
-                id: admin._id,
-                fullName: admin.fullName, // Include full name
-                role: admin.role, // Include role (e.g., Admin)
-            },
+            { id: admin._id, role: admin.role },
             process.env.JWT_SECRET,
-            { expiresIn: '1d' } // Token expiration time
+            { expiresIn: '1d' }
         );
 
         res.status(200).json({

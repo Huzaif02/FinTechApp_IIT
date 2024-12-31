@@ -1,19 +1,30 @@
 const jwt = require('jsonwebtoken');
 
 const adminAuthMiddleware = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
+  const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        if (decoded.role !== 'admin' && decoded.role !== 'super_admin') {
-            return res.status(403).json({ message: 'Forbidden. Insufficient privileges.' });
-        }
-        req.admin = decoded;
-        next();
-    } catch (err) {
-        return res.status(403).json({ message: 'Invalid or expired token.' });
+  if (!token) {
+    return res.status(401).json({ message: 'Authorization token is required' });
+  }
+
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded.role) {
+      return res.status(403).json({ message: 'Access denied. Invalid role.' });
     }
+
+    // Attach user info to the req object
+    req.user = {
+      id: decoded.id,
+      fullName: decoded.fullName, // Ensure this is included in the token payload
+      role: decoded.role, // Ensure this is included in the token payload
+    };
+
+    next(); // Continue to the next middleware/controller
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token', error: error.message });
+  }
 };
 
 module.exports = adminAuthMiddleware;
