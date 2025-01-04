@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const adminAuthMiddleware = (req, res, next) => {
+const superAdminAuthMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
 
   if (!token) {
@@ -10,21 +10,23 @@ const adminAuthMiddleware = (req, res, next) => {
   try {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decoded.role) {
-      return res.status(403).json({ message: 'Access denied. Invalid role.' });
+
+    // Check if the user has a super admin role
+    if (decoded.role !== 'super_admin') {
+      return res.status(403).json({ message: 'Access denied. Super Admins only.' });
     }
 
-    // Attach user info to the req object
+    // Attach user info to the req object for further use
     req.user = {
       id: decoded.id,
-      fullName: decoded.fullName, 
-      role: decoded.role, 
+      fullName: decoded.fullName,
+      role: decoded.role,
     };
 
-    next(); // Continue to the next middleware/controller
+    next(); // Allow the request to continue
   } catch (error) {
     res.status(401).json({ message: 'Invalid token', error: error.message });
   }
 };
 
-module.exports = adminAuthMiddleware;
+module.exports = superAdminAuthMiddleware;

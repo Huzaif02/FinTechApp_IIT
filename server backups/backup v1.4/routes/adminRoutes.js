@@ -16,10 +16,10 @@ const faqController = require('../controllers/faqController');
 const notificationController = require('../controllers/notificationController');
 
 // Admin Registration
-router.post('/register',logActivity('New Admin Register Request'), adminController.registerAdmin);
+router.post('/register', adminController.registerAdmin);
 
 // Admin Login
-router.post('/login', logActivity('Admin Login Request'),adminController.loginAdmin);
+router.post('/login', adminController.loginAdmin);
 
 // User Management
 router.get('/users', adminAuthMiddleware, logActivity('Fetch All Users'), userController.getAllUsers);

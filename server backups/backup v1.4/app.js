@@ -14,11 +14,8 @@ const complianceRoutes = require('./routes/complianceRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const adminRoutes = require('./routes/adminRoutes'); // Admin routes
-const superAdminRoutes = require('./routes/superAdminRoutes'); // Super Admin routes
-
 
 const app = express();
-app.set('trust proxy', true); // Enables Express to trust proxy headers
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
@@ -29,15 +26,14 @@ app.use(helmet()); // Enhance app security
 app.use(compression()); // Compress HTTP responses
 
 // API Routes
-app.use('/api/auth', authRoutes); //ready
-app.use('/api/kyc', kycRoutes); //ready
+app.use('/api/auth', authRoutes);
+app.use('/api/kyc', kycRoutes);
 app.use('/api/investments', investmentRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/compliance', complianceRoutes);
-app.use('/api/user', profileRoutes); //ready
-app.use('/api/admin', adminRoutes); // Register admin routes //ready
-app.use('/api/superadmin', superAdminRoutes); // Super Admin routes
-app.use('/api', dashboardRoutes); //reade
+app.use('/api/user', profileRoutes);
+app.use('/api/admin', adminRoutes); // Register admin routes
+app.use('/api', dashboardRoutes);
 
 // Root Route
 app.get('/', (req, res) => {

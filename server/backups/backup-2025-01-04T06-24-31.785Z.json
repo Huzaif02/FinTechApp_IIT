@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "_id": "676cf074844eee8ab8f469ef",
+      "fullName": "Test User",
+      "email": "test1@gmail.com",
+      "mobile": "9856325474",
+      "otp": null,
+      "isVerified": false,
+      "role": "user",
+      "kycStatus": "Pending",
+      "transactionHistory": [],
+      "createdAt": "2024-12-26T05:58:12.585Z",
+      "updatedAt": "2024-12-26T05:58:12.585Z",
+      "__v": 0
+    },
+    {
+      "_id": "676d1edd9b3f8ee5ba984bb1",
+      "fullName": "Test User 2",
+      "email": "test2@gmail.com",
+      "mobile": "9856225474",
+      "otp": null,
+      "isVerified": false,
+      "role": "user",
+      "kycStatus": "Pending",
+      "transactionHistory": [],
+      "createdAt": "2024-12-26T09:16:13.181Z",
+      "updatedAt": "2024-12-26T09:16:13.181Z",
+      "__v": 0
+    }
+  ],
+  "transactions": []
+}

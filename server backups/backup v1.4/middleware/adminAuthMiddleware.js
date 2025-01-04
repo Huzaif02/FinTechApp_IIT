@@ -17,8 +17,8 @@ const adminAuthMiddleware = (req, res, next) => {
     // Attach user info to the req object
     req.user = {
       id: decoded.id,
-      fullName: decoded.fullName, 
-      role: decoded.role, 
+      fullName: decoded.fullName, // Ensure this is included in the token payload
+      role: decoded.role, // Ensure this is included in the token payload
     };
 
     next(); // Continue to the next middleware/controller

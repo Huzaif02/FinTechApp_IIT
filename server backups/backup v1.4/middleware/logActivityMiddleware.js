@@ -4,17 +4,11 @@ const Log = require('../models/Log/Logs');
 const logActivity = (actionDescription) => {
   return async (req, res, next) => {
     try {
-      const getClientIp = (req) => {
-        const forwarded = req.headers['x-forwarded-for'];
-        return forwarded ? forwarded.split(',')[0] : req.connection.remoteAddress || req.ip;
-      };
-
       // Debugging: Log the user info
       console.log('req.user:', req.user);
 
       const { id, fullName, role } = req.user || {}; // Safely destructure req.user
-      // const ipAddress = req.ip || 'Unknown IP'; // IP address of the user
-      const ipAddress = getClientIp(req);
+      const ipAddress = req.ip || 'Unknown IP'; // IP address of the user
       const userAgent = req.headers['user-agent'] || 'Unknown User-Agent'; // User-Agent string
 
       // Create a log entry
