@@ -49,6 +49,8 @@ router.get('/dashboard', adminAuthMiddleware, logActivity('Fetch Admin Dashboard
 
 // Partner Management
 router.post('/partner', adminAuthMiddleware, logActivity('Add Partner'), partnerController.addPartner); // Add a new partner
+router.get('/partner/reports', adminAuthMiddleware, logActivity('Fetch All Reports by Partner'), partnerController.getAllReports); //Fetching All Reports Submitted by Partners
+router.get('/partner/reports/:id', adminAuthMiddleware, logActivity('Fetch Partner Report in Detail'), partnerController.getReportById); // Fetching Reports Submitted for specific Partners
 router.get('/partner', adminAuthMiddleware, logActivity('Fetch All Partners'), partnerController.getAllPartners); // Fetch all partners
 router.get('/partner/:id', adminAuthMiddleware, logActivity('Fetch Partner Details'), partnerController.getPartnerDetails); // Fetch specific partner details
 router.put('/partner/:id', adminAuthMiddleware, logActivity('Update Partner Details'), partnerController.updatePartner); // Update partner details
@@ -61,6 +63,7 @@ router.get('/promotions/:id', adminAuthMiddleware, logActivity('Fetch Specific P
 router.put('/promotions/:id', adminAuthMiddleware, logActivity('Update Promotion'), promotionController.updatePromotion); // Update a promotion
 router.delete('/promotions/:id', adminAuthMiddleware, logActivity('Delete Promotion'), promotionController.deletePromotion); // Delete a promotion
 router.get('/promotions/audience/:audience', adminAuthMiddleware, logActivity('Fetch Promotions for Specific Audience'), promotionController.getPromotionsForAudience); // Fetch promotions for a specific audience
+
 // News Management
 router.post('/news', adminAuthMiddleware, logActivity('Create News Post'), newsController.createNews); // Create a news post
 router.get('/news', adminAuthMiddleware, logActivity('Fetch All News Posts'), newsController.getAllNews); // Fetch all news posts
@@ -71,7 +74,7 @@ router.get('/news/audience/:audience', adminAuthMiddleware, logActivity('Fetch N
 
 // Query Management
 router.post('/queries', adminAuthMiddleware, logActivity('Create Query'), queryController.createQuery); // Create a query
-router.get('/queries', adminAuthMiddleware, logActivity('Fetch All Queries for Admin'), queryController.getQueriesForAdmin); // Fetch queries for admin to answer
+router.get('/queries', adminAuthMiddleware, logActivity('Fetch All Queries for Admin'), queryController.getAllQueries); // Fetch queries for admin to answer
 router.get('/queries/audience/:audience', adminAuthMiddleware, logActivity('Fetch Queries for Specific Audience'), queryController.getQueriesForAudience); // Fetch queries for a specific audience
 router.put('/queries/:id/answer', adminAuthMiddleware, logActivity('Answer Query'), queryController.answerQuery); // Answer a query
 router.post('/queries/bulk-create', adminAuthMiddleware, logActivity('Bulk Create Queries'), queryController.bulkCreateQueries); // Bulk Create Queries

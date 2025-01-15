@@ -24,7 +24,7 @@ const uploadDocument = async (req, res) => {
 };
 
 // Verify KYC status
-const verifyKYC = async (req, res) => {
+const getKYCStatus = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -40,4 +40,4 @@ const verifyKYC = async (req, res) => {
   }
 };
 
-module.exports = { uploadDocument, verifyKYC };
+module.exports = { uploadDocument, getKYCStatus };

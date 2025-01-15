@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
@@ -53,6 +52,11 @@ const userSchema = new mongoose.Schema(
         ref: 'Transaction', // Reference to Transaction schema
       },
     ],
+    referredByAgent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Agent', // Reference to the Agent schema
+      default: null, // No agent by default
+    },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -1,7 +1,7 @@
-const Portfolio = require('../models');
+const Portfolio = require('../models/User/Portfolio');
 
 // Get portfolio details
-const getPortfolio = async (req, res) => {
+exports.getPortfolio = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -17,7 +17,7 @@ const getPortfolio = async (req, res) => {
 };
 
 // Get portfolio insights
-const getInsights = async (req, res) => {
+exports.getInsights = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -29,5 +29,3 @@ const getInsights = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
-module.exports = { getPortfolio, getInsights };

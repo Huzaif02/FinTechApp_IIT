@@ -23,6 +23,11 @@ const PartnerSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    role: {
+      type: String,
+      enum: ['partner'],
+      default: 'partner'
+    },
     password: {
       type: String,
       required: false,

@@ -66,6 +66,8 @@ router.post(
   preRegister
 );
 
+//added the pre registration via user routes
+
 // Verify OTP and Register (Step 2)
 router.post(
   '/verify-otp-register',

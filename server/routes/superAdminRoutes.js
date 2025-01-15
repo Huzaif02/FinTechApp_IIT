@@ -15,10 +15,10 @@ router.get('/monitor/traffic', superAdminAuthMiddleware, logActivityMiddleware('
 router.get('/monitor/admin', superAdminAuthMiddleware, logActivityMiddleware('Monitor Admin Activity'), superAdminController.monitorAdminActivity);
 
 //Agent Monitoring
-router.get('/monitor/admin', superAdminAuthMiddleware, logActivityMiddleware('Monitor Agent Activity'), superAdminController.monitorAgentActivity);
+router.get('/monitor/agent', superAdminAuthMiddleware, logActivityMiddleware('Monitor Agent Activity'), superAdminController.monitorAgentActivity);
 
 //Partner Monitoring
-router.get('/monitor/admin', superAdminAuthMiddleware, logActivityMiddleware('Monitor Partner Activity'), superAdminController.monitorPartnerActivity);
+router.get('/monitor/partner', superAdminAuthMiddleware, logActivityMiddleware('Monitor Partner Activity'), superAdminController.monitorPartnerActivity);
 
 // Logs
 router.get('/logs', superAdminAuthMiddleware, logActivityMiddleware('View All Server Logs'), superAdminController.viewServerLogs); // View server logs

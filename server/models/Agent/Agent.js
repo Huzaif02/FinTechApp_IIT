@@ -61,9 +61,13 @@ const agentSchema = new mongoose.Schema(
       enum: ['Active', 'Inactive', 'Suspended'],
       default: 'Active',
     },
+    usersReferred: [{ 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: []
+    }], // List of users referred by the agent
   },
   { timestamps: true }
 );
 
-// Ensure the model is only defined once
-module.exports = mongoose.models.Agent || mongoose.model('Agent', agentSchema);
+module.exports = mongoose.model('Agent', agentSchema);

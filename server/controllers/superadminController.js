@@ -21,6 +21,11 @@ exports.superAdminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Validate email and password
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required.' });
+    }
+    
     const superAdmin = await Admin.findOne({ email });
     if (!superAdmin || superAdmin.role !== 'super_admin') {
       return res.status(404).json({ message: 'Super Admin not found or unauthorized.' });
