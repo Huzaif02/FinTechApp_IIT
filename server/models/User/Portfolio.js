@@ -4,55 +4,85 @@ const PortfolioSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference to User schema
+      ref: 'User', // Reference to the User schema
       required: true,
     },
     investments: [
       {
-        fundId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'MutualFund', // Reference to MutualFund schema
+        investmentId: {
+          type: String, // Unique identifier for the investment (e.g., Mutual Fund ID, Stock Ticker)
           required: true,
         },
-        amount: {
-          type: Number, // Amount invested
+        investmentType: {
+          type: String, // Type of investment
+          enum: [
+            'stocks', // Equity investments in companies
+            'bonds', // Fixed-income securities
+            'mutual-Funds', // Pooled investment vehicles
+            'etfs', // Exchange-Traded Funds
+            'property', // Real estate investments
+            'gold', // Precious metals
+            'crypto', // Cryptocurrencies like Bitcoin or Ethereum
+            'fixed-deposits', // Bank fixed deposits or CDs
+            'savings-account', // Cash or savings deposits
+            'others', // Any miscellaneous or less common investments
+          ],
+          required: true,
+        },
+        name: {
+          type: String, // Name of the investment (e.g., Mutual Fund Name, Stock Name)
           required: true,
         },
         units: {
-          type: Number, // Units purchased
+          type: Number, // Number of units held
           required: true,
+          default: 0,
         },
-        purchaseDate: {
-          type: Date,
-          default: Date.now,
+        investmentAmount: {
+          type: Number, // Total amount invested
+          required: true,
+          default: 0,
         },
         currentValue: {
           type: Number, // Current value of the investment
           required: true,
+          default: 0,
+        },
+        purchaseDate: {
+          type: Date, // Date of purchase
+          required: true,
+        },
+        lastUpdated: {
+          type: Date, // Last updated timestamp
+          default: Date.now,
         },
       },
     ],
-    totalInvestment: {
-      type: Number, // Total amount invested across all funds
+    totalInvested: {
+      type: Number, // Total amount invested across all investments
       required: true,
       default: 0,
     },
-    currentPortfolioValue: {
-      type: Number, // Current total value of the portfolio
+    totalCurrentValue: {
+      type: Number, // Total current value across all investments
       required: true,
       default: 0,
     },
-    profitLoss: {
-      type: Number, // Total profit or loss across the portfolio
+    overallReturn: {
+      type: Number, // Overall return percentage
       required: true,
       default: 0,
     },
-    lastUpdated: {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
       type: Date,
       default: Date.now,
     },
   },
-  { timestamps: true }
+  { timestamps: true } // Automatically add createdAt and updatedAt timestamps
 );
 
 module.exports = mongoose.model('Portfolio', PortfolioSchema);

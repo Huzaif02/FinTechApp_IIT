@@ -18,13 +18,13 @@ const PromotionSchema = new mongoose.Schema(
     },
     targetAudience: {
       type: String,
-      enum: ['User', 'Agent', 'Partner'], // Specify target audience
+      enum: ['user', 'agent', 'partner'], // Specify target audience
       required: true,
     },
     status: {
       type: String,
-      enum: ['Draft', 'Published'],
-      default: 'Draft',
+      enum: ['draft', 'published'],
+      default: 'draft',
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

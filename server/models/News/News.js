@@ -23,13 +23,13 @@ const NewsSchema = new mongoose.Schema(
     },
     audience: {
       type: String,
-      enum: ['User', 'Agent', 'Partner', 'All'],
+      enum: ['user', 'agent', 'partner', 'common'],
       required: true, // Specify target audience
     },
     status: {
       type: String,
-      enum: ['Draft', 'Published'],
-      default: 'Draft',
+      enum: ['draft', 'published'],
+      default: 'draft',
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
